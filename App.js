@@ -1,16 +1,20 @@
-import { Image, StyleSheet, View } from "react-native";
+import { StatusBar } from "expo-status-bar";
+import {
+  StyleSheet,
+  View,
+  ImageBackground,
+  Keyboard,
+  TouchableWithoutFeedback,
+} from "react-native";
 import { useFonts } from "expo-font";
 
-import RegistrationScreen from "./screens/RegistrationScreen/RegistrationScreen";
-import LoginScreen from "./screens/LoginScreen/LoginScreen";
-import PostsScreen from "./screens/PostsScreen/PostsScreen";
+import { LoginScreen } from "./screens/LoginScreen";
+import { RegistrationScreen } from "./screens/RegistrationScreen";
 
-const App = () => {
+export default function App() {
   const [fontsLoaded] = useFonts({
-    "Inter-Medium": require("./assets/fonts/Inter/static/Inter-Medium.ttf"),
-    "Roboto-Medium": require("./assets/fonts/Roboto/Roboto-Medium.ttf"),
-    "Roboto-Regular": require("./assets/fonts/Roboto/Roboto-Regular.ttf"),
-    "Roboto-Bold": require("./assets/fonts/Roboto/Roboto-Bold.ttf"),
+    "Roboto-Medium": require("./assets/fonts/Roboto-Medium.ttf"),
+    "Roboto-Regular": require("./assets/fonts/Roboto-Regular.ttf"),
   });
 
   if (!fontsLoaded) {
@@ -18,31 +22,30 @@ const App = () => {
   }
 
   return (
-    <View style={styles.container}>
-      <Image
-        source={require("./assets/images/app_background.jpg")}
-        resizeMode="cover"
-        style={styles.image}
-      />
-      <RegistrationScreen />
-      {/* <LoginScreen /> */}
-      {/* <PostsScreen /> */}
-    </View>
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+      <View style={styles.container}>
+        <ImageBackground
+          source={require("./assets/images/background.jpg")}
+          resizeMode="cover"
+          style={styles.backgroundImg}
+        >
+          {/* <LoginScreen /> */}
+          <RegistrationScreen />
+        </ImageBackground>
+        <StatusBar style="auto" />
+      </View>
+    </TouchableWithoutFeedback>
   );
-};
+}
 
 const styles = StyleSheet.create({
   container: {
-    position: "relative",
     flex: 1,
     backgroundColor: "#fff",
   },
-  image: {
-    position: "absolute",
-    width: "100%",
+  backgroundImg: {
     flex: 1,
-    justifyContent: "center",
+    justifyContent: "flex-end",
+    // alignItems: "center",
   },
 });
-
-export default App;
